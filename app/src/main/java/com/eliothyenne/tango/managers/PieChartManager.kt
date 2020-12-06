@@ -28,9 +28,9 @@ class PieChartManager {
         for (word in vocabularyArrayList) {
             if (word.level == "Unseen") {
                 unseenCounter += 1
-            } else if (word.level == "Apprentice1" || word.level == "Apprentice2" || word.level == "Apprentice3" || word.level == "Apprentice4") {
+            } else if (word.level == "Apprentice 1" || word.level == "Apprentice 2" || word.level == "Apprentice 3" || word.level == "Apprentice 4") {
                 apprenticeCounter += 1
-            } else if (word.level == "Guru1" || word.level == "Guru2") {
+            } else if (word.level == "Guru 1" || word.level == "Guru 2") {
                 guruCounter += 1
             } else if (word.level == "Master") {
                 masterCounter += 1

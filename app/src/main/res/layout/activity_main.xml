@@ -64,7 +64,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reviewButton"
             android:textColor="@color/white"
-            android:text="追加"
+            android:text="Add"
             android:textSize="21sp"
             android:background="@drawable/dark_green_rounded_corners"
             />

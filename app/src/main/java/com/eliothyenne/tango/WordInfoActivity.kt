@@ -44,7 +44,7 @@ class WordInfoActivity : AppCompatActivity() {
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
-        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight,"削除", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight,"Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
         linearLayout.addView((removeWordButton))
 
         removeWordButton.setOnClickListener() {
@@ -68,7 +68,7 @@ class WordInfoActivity : AppCompatActivity() {
             finish()
         }
 
-        val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "保存", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Save", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
 
         noteEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

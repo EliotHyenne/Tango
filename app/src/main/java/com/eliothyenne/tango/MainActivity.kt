@@ -48,13 +48,13 @@ class MainActivity : AppCompatActivity() {
             linearLayout.removeView(pieChart)
         }
 
-        val vocabularyListTitle = "単語帳" + " (" + vocabularyList.vocabularyArrayList.size + ")"
+        val vocabularyListTitle = "Words" + " (" + vocabularyList.vocabularyArrayList.size + ")"
         vocabularyListButton.text = vocabularyListTitle
 
-        val lessonsTitle = "レッスン" + " (" + unseenWords.size + ")"
+        val lessonsTitle = "Lesson" + " (" + unseenWords.size + ")"
         lessonButton.text = lessonsTitle
 
-        val reviewTitle = "リビュー" + " (" + reviewsList.size + ")"
+        val reviewTitle = "Review" + " (" + reviewsList.size + ")"
         reviewButton.text = reviewTitle
 
         vocabularyListButton.setOnClickListener {

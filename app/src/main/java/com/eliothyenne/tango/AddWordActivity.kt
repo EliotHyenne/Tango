@@ -102,8 +102,8 @@ class AddWordActivity : AppCompatActivity() {
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
-        val addWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"追加", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
-        val removeWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"削除", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val addWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Add", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val removeWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
 
         if (!vocabularyListManager.vocabularyListContainsWord(word!!, vocabularyList)) {
             //Add word button

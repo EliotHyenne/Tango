@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".MainActivity"
+    android:background="@color/brown"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/mainLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/vocabularyListButton"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="21sp"
+            android:textColor="@color/white"
+            android:background="@drawable/dark_gray_rounded_corners"
+            />
+
+        <Button
+            android:id="@+id/lessonButton"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vocabularyListButton"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:background="@drawable/light_blue_rounded_corners"
+            />
+
+        <Button
+            android:id="@+id/reviewButton"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lessonButton"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:background="@drawable/beige_rounded_corners"
+            />
+
+        <Button
+            android:id="@+id/addWordButton"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reviewButton"
+            android:textColor="@color/white"
+            android:text="追加"
+            android:textSize="21sp"
+            android:background="@drawable/dark_green_rounded_corners"
+            />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addWordButton"
+            />
+    </LinearLayout>
+</ScrollView>

@@ -1,8 +1,8 @@
 package com.eliothyenne.tango
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -10,12 +10,14 @@ import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.eliothyenne.tango.managers.ArrayListManager
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
 import com.eliothyenne.tango.models.Word
+
 
 class WordInfoActivity : AppCompatActivity() {
     private val vocabularyListManager = VocabularyListManager()
@@ -33,39 +35,52 @@ class WordInfoActivity : AppCompatActivity() {
         val word = intent.getSerializableExtra("wordObject") as Word
         val linearLayout = findViewById<LinearLayout>(R.id.wordInfoLinearLayout)
         val r: Resources = this@WordInfoActivity.resources
-        val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100.0F, r.displayMetrics).toInt()
-        val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75.0F, r.displayMetrics).toInt()
+        val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100.0F, r.displayMetrics).toInt()
+        val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75.0F, r.displayMetrics).toInt()
 
         layoutManager.showWordInfo(word, linearLayout, this@WordInfoActivity)
 
         //Notes TextView and EditText
         val noteTextView = layoutManager.createTextView(this@WordInfoActivity, "Note(s):", 14.0F, Typeface.NORMAL, R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
-        val noteEditText = layoutManager.createEditText(this@WordInfoActivity, "Optional note(s)", R.color.light_gray, word.note.toString(), R.color.dark_gray, R.color.white,0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+        val noteEditText = layoutManager.createEditText(this@WordInfoActivity, "Optional note(s)", R.color.light_gray, word.note.toString(), R.color.dark_gray, R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
-        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight,"Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
         linearLayout.addView((removeWordButton))
 
         removeWordButton.setOnClickListener() {
-            if (word.japanese.containsKey("word")) {
-                val str = "Removed" + " \"" + word.japanese["word"] + "\" from your vocabulary list"
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            } else {
-                val str = "Removed" + " \"" + word.japanese["reading"] + "\" from your vocabulary list"
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
+            val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@WordInfoActivity)
+            builder.setCancelable(true)
+            builder.setTitle("Are you sure?")
+            builder.setMessage("")
+            builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
+                if (word.japanese.containsKey("word")) {
+                    val str = "Removed" + " \"" + word.japanese["word"] + "\" from your vocabulary list"
+                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
+                    toast.show()
+                } else {
+                    val str = "Removed" + " \"" + word.japanese["reading"] + "\" from your vocabulary list"
+                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+
+                //Remove word from vocabulary list
+                vocabularyListManager.removeWordFromVocabularyList(word, vocabularyList)
+                vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
+
+                val vocabularyListActivity = Intent(this, VocabularyListActivity::class.java)
+                startActivity(vocabularyListActivity)
+
+                finish()
+            })
+            builder.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
+
+            val dialog: android.app.AlertDialog? = builder.create()
+
+            if (dialog != null) {
+                dialog.show()
             }
-
-            //Remove word from vocabulary list
-            vocabularyListManager.removeWordFromVocabularyList(word, vocabularyList)
-            vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
-
-            val vocabularyListActivity = Intent(this, VocabularyListActivity::class.java)
-            startActivity(vocabularyListActivity)
-
-            finish()
         }
 
         val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Save", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
@@ -104,7 +119,7 @@ class WordInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun editNote(word : Word, note : String) {
+    private fun editNote(word: Word, note: String) {
         if (word.japanese.containsKey("word")) {
             for (i in 0 until vocabularyList.vocabularyArrayList.size) {
                 if (vocabularyList.vocabularyArrayList[i].japanese["word"] == word.japanese["word"]) {

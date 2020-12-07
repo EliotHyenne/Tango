@@ -1,5 +1,6 @@
 package com.eliothyenne.tango
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -136,24 +137,36 @@ class AddWordActivity : AppCompatActivity() {
         }
 
         removeWordButton.setOnClickListener() {
-            if (japaneseHashMap.containsKey("word")) {
-                val str = "Removed" + " \"" + japaneseHashMap["word"] + "\" from your vocabulary list"
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            } else if (japaneseHashMap.containsKey("reading")) {
-                val str = "Removed" + " \"" + japaneseHashMap["reading"] + "\" from your vocabulary list"
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
+            val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@AddWordActivity)
+            builder.setCancelable(true)
+            builder.setTitle("Are you sure?")
+            builder.setMessage("")
+            builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
+                if (word!!.japanese.containsKey("word")) {
+                    val str = "Removed" + " \"" + word!!.japanese["word"] + "\" from your vocabulary list"
+                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
+                    toast.show()
+                } else {
+                    val str = "Removed" + " \"" + word!!.japanese["reading"] + "\" from your vocabulary list"
+                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+
+                //Remove word from vocabulary list
+                vocabularyListManager.removeWordFromVocabularyList(word!!, vocabularyList)
+                vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
+
+                linearLayout.removeView(removeWordButton)
+                linearLayout.addView(addWordButton)
+            })
+            builder.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
+
+            val dialog: android.app.AlertDialog? = builder.create()
+
+            if (dialog != null) {
+                dialog.show()
             }
-            //Remove word from vocabulary list
-            vocabularyListManager.removeWordFromVocabularyList(word!!, vocabularyList)
-
-            vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
-
-            linearLayout.removeView(removeWordButton)
-            linearLayout.addView((addWordButton))
         }
-
     }
 
     private fun getArrayListFromJSONArray(jsonArray : JSONArray) : ArrayList<String> {

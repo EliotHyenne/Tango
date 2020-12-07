@@ -45,12 +45,24 @@ class ReviewsManager {
             }
             return false
         }
-        val meanings = vocabularyListManager.getMeanings(word.senses)
 
-        if (meanings.contains(answer)) {
-            return true
+        val meanings = vocabularyListManager.getMeanings(word.senses)
+        val allWordsInAnswer = answer.split(" ").toTypedArray()
+        val allWordsInMeanings = arrayListOf<String>()
+        var rightAnswer = false
+
+        for (meaning in meanings) {
+            val allWordsInMeaning = meaning.split(" ").toTypedArray()
+
+            for (str in allWordsInMeaning) {
+                allWordsInMeanings.add(str)
+            }
         }
-        return false
+
+        for (str in allWordsInAnswer) {
+            rightAnswer = allWordsInMeanings.contains(str)
+        }
+        return rightAnswer
     }
 
     fun setLevel(wordObject : Word, rightAnswer : Boolean) {

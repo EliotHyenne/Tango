@@ -11,7 +11,6 @@ import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
 import com.github.mikephil.charting.charts.PieChart
 
-
 class MainActivity : AppCompatActivity() {
     private val vocabularyListManager = VocabularyListManager()
     private val reviewsManager = ReviewsManager()

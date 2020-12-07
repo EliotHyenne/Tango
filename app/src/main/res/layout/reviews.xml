@@ -11,9 +11,17 @@
     <LinearLayout
         android:id="@+id/reviewsLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:id="@+id/topBarRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>

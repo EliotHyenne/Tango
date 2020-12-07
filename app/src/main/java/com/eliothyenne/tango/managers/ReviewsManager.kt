@@ -146,4 +146,45 @@ class ReviewsManager {
             }
         }
     }
+
+    fun findNextLevel(wordObject: Word, rightAnswer: Boolean) : String {
+        if (rightAnswer) {
+            if (wordObject.level == "Apprentice 1") {
+                return "Apprentice 2"
+            } else if (wordObject.level == "Apprentice 2") {
+                return "Apprentice 3"
+            } else if (wordObject.level == "Apprentice 3") {
+                return "Apprentice 4"
+            } else if (wordObject.level == "Apprentice 4") {
+                return "Guru 1"
+            } else if (wordObject.level == "Guru 1") {
+                return "Guru 2"
+            } else if (wordObject.level == "Guru 2") {
+                return "Master"
+            } else if (wordObject.level == "Master") {
+                return "Enlighten"
+            } else if (wordObject.level == "Enlighten") {
+                return "Burn"
+            }
+        } else {
+            if (wordObject.level == "Apprentice 1") {
+                return "Apprentice 1"
+            } else if (wordObject.level == "Apprentice 2") {
+                return "Apprentice 1"
+            } else if (wordObject.level == "Apprentice 3") {
+                return "Apprentice 1"
+            } else if (wordObject.level == "Apprentice 4") {
+                return "Apprentice 1"
+            } else if (wordObject.level == "Guru 1") {
+                return "Apprentice 4"
+            } else if (wordObject.level == "Guru 2") {
+                return "Apprentice 4"
+            } else if (wordObject.level == "Master") {
+                return "Apprentice 4"
+            } else if (wordObject.level == "Enlighten") {
+                return "Guru 1"
+            }
+        }
+        return ""
+    }
 }

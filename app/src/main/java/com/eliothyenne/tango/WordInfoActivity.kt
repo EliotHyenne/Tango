@@ -55,16 +55,6 @@ class WordInfoActivity : AppCompatActivity() {
             builder.setTitle("Are you sure?")
             builder.setMessage("")
             builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
-                if (word.japanese.containsKey("word")) {
-                    val str = "Removed" + " \"" + word.japanese["word"] + "\" from your vocabulary list"
-                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                    toast.show()
-                } else {
-                    val str = "Removed" + " \"" + word.japanese["reading"] + "\" from your vocabulary list"
-                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                    toast.show()
-                }
-
                 //Remove word from vocabulary list
                 vocabularyListManager.removeWordFromVocabularyList(word, vocabularyList)
                 vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
@@ -106,16 +96,6 @@ class WordInfoActivity : AppCompatActivity() {
 
             linearLayout.removeView(saveButton)
             linearLayout.addView(removeWordButton)
-
-            if (word.japanese.containsKey("word")) {
-                val str = "Saved changes " + " \"" + word.japanese["word"] + "\""
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            } else {
-                val str = "Saved changes " + " \"" + word.japanese["reading"] + "\""
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            }
         }
     }
 

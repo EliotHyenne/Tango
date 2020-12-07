@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.eliothyenne.tango.managers.*
 import com.eliothyenne.tango.models.VocabularyList
 import com.eliothyenne.tango.models.Word
@@ -43,6 +45,7 @@ class ReviewsActivity : AppCompatActivity() {
 
     private fun startReviewSession(reviewsList : ArrayList<Word>, reviewType : String, index : Int, rightAnswer : Boolean) {
         val linearLayout = findViewById<LinearLayout>(R.id.reviewsLinearLayout)
+        val linearLayout2 = findViewById<RelativeLayout>(R.id.topBarRelativeLayout)
         val r: Resources = this@ReviewsActivity.resources
         val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100.0F, r.displayMetrics).toInt()
         val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75.0F, r.displayMetrics).toInt()
@@ -61,14 +64,31 @@ class ReviewsActivity : AppCompatActivity() {
             Typeface.NORMAL,
             R.color.beige,
             0.0F,
-            5.0F,
-            5.0F,
+            0.0F,
+            0.0F,
             0.0F,
             0,
-            0,
-            0,
+            10,
+            20,
             0,
             Gravity.RIGHT
+        )
+
+        val levelChangeTextView = layoutManager.createTextView(
+                this@ReviewsActivity,
+                "",
+                14.0F,
+                Typeface.BOLD,
+                R.color.dark_green,
+                0.0F,
+                0.0F,
+                0.0F,
+                0.0F,
+                20,
+                10,
+                0,
+                0,
+                Gravity.LEFT
         )
 
         val nextButton = layoutManager.createButton(
@@ -112,8 +132,17 @@ class ReviewsActivity : AppCompatActivity() {
         var wordObject = reviewsList[index]
         var reading: String = wordObject.japanese["reading"].toString()
 
+        val wordCounterDisplayLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val levelChangeLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        wordCounterDisplayLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        wordCounterDisplayTextView.layoutParams = wordCounterDisplayLayoutParams
+        levelChangeTextView.layoutParams = levelChangeLayoutParams
+
         linearLayout.removeAllViews()
-        linearLayout.addView(wordCounterDisplayTextView)
+        linearLayout2.removeAllViews()
+        linearLayout2.addView(levelChangeTextView)
+        linearLayout2.addView(wordCounterDisplayTextView)
+        linearLayout.addView(linearLayout2)
 
         if (wordObject.japanese.containsKey("word")) {
             word = wordObject.japanese["word"].toString()
@@ -248,14 +277,21 @@ class ReviewsActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 if (answerEditText.text.toString() != "") {
                     if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
+                        if (reviewType == "Meaning") {
+                            var str = "+ "
+                            str += reviewsManager.findNextLevel(wordObject, true)
+                            levelChangeTextView.text = str
+                        }
                         rightAnswer = true
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.dark_green)
                         linearLayout.removeView(checkAnswerButton)
                         linearLayout.addView(nextButton)
-                        layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
-                        layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                     } else {
+                        levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                        var str = "- "
+                        str += reviewsManager.findNextLevel(wordObject, false)
+                        levelChangeTextView.text = str
                         rightAnswer = false
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.red)
@@ -274,14 +310,21 @@ class ReviewsActivity : AppCompatActivity() {
         checkAnswerButton.setOnClickListener() {
             if (answerEditText.text.toString() != "") {
                 if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
+                    if (reviewType == "Meaning") {
+                        var str = "+ "
+                        str += reviewsManager.findNextLevel(wordObject, true)
+                        levelChangeTextView.text = str
+                    }
                     rightAnswer = true
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.dark_green)
                     linearLayout.removeView(checkAnswerButton)
                     linearLayout.addView(nextButton)
-                    layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
-                    layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                 } else {
+                    levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                    var str = "- "
+                    str += reviewsManager.findNextLevel(wordObject, false)
+                    levelChangeTextView.text = str
                     rightAnswer = false
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.red)

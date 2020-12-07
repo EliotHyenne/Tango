@@ -115,16 +115,6 @@ class AddWordActivity : AppCompatActivity() {
         }
 
         addWordButton.setOnClickListener() {
-            if (word!!.japanese.containsKey("word")) {
-                var str = "Added" + " \"" + word!!.japanese["word"] + "\" to your vocabulary list"
-                var toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            } else if (word!!.japanese.containsKey("reading")) {
-                val str = "Added" + " \"" + word!!.japanese["reading"] + "\" to your vocabulary list"
-                val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                toast.show()
-            }
-
             word!!.note = noteEditText.text.toString()
 
             //Add word to vocabulary list
@@ -142,15 +132,6 @@ class AddWordActivity : AppCompatActivity() {
             builder.setTitle("Are you sure?")
             builder.setMessage("")
             builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
-                if (word!!.japanese.containsKey("word")) {
-                    val str = "Removed" + " \"" + word!!.japanese["word"] + "\" from your vocabulary list"
-                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                    toast.show()
-                } else {
-                    val str = "Removed" + " \"" + word!!.japanese["reading"] + "\" from your vocabulary list"
-                    val toast = Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT)
-                    toast.show()
-                }
 
                 //Remove word from vocabulary list
                 vocabularyListManager.removeWordFromVocabularyList(word!!, vocabularyList)

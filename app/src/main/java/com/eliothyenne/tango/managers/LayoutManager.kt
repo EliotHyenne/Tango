@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.eliothyenne.tango.R
 import com.eliothyenne.tango.models.Word
+import java.lang.Math.round
 import java.util.*
 
 class LayoutManager {
@@ -207,14 +208,14 @@ class LayoutManager {
             x /= 24
             val days = x
 
-            if (days == 0.toLong()) {
-                str2 = "Next review in $hours hours $minutes min $seconds sec"
-            } else if (days == 0.toLong() && hours == 0.toLong()) {
-                str2 = "Next review in $minutes min $seconds sec"
-            } else if (days == 0.toLong() && hours == 0.toLong() && minutes == 0.toLong()) {
-                str2 = "Next review in $seconds sec"
-            } else if (days == 0.toLong() && hours == 0.toLong() && minutes == 0.toLong() && seconds == 0.toLong()) {
+            if (days.toInt() <= 0 && hours.toInt() <= 0 && minutes.toInt() <= 0 && seconds.toInt() <= 0) {
                 str2 = "Can review now"
+            } else if (days.toInt() <= 0 && hours.toInt() <= 0 && minutes.toInt() <= 0) {
+                str2 = "Next review in $seconds sec"
+            } else if (days.toInt() <= 0 && hours.toInt() <= 0) {
+                str2 = "Next review in $minutes min $seconds sec"
+            } else if (days.toInt() <= 0) {
+                str2 = "Next review in $hours hours $minutes min $seconds sec"
             } else {
                 str2 = "Next review in $days days $hours hours $minutes min $seconds sec"
             }

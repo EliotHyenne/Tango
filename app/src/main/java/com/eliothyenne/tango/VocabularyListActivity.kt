@@ -45,13 +45,25 @@ class VocabularyListActivity : AppCompatActivity() {
     }
 
     private fun showWords(vocabularyArrayList : ArrayList<Word>) {
+        showWord(vocabularyArrayList, "Unseen")
+        showWord(vocabularyArrayList, "Apprentice 1")
+        showWord(vocabularyArrayList, "Apprentice 2")
+        showWord(vocabularyArrayList, "Apprentice 3")
+        showWord(vocabularyArrayList, "Apprentice 4")
+        showWord(vocabularyArrayList, "Guru 1")
+        showWord(vocabularyArrayList, "Guru 2")
+        showWord(vocabularyArrayList, "Master")
+        showWord(vocabularyArrayList, "Enlighten")
+        showWord(vocabularyArrayList, "Burn")
+    }
+
+    private fun showWord(vocabularyArrayList: ArrayList<Word>, wordLevel : String) {
         val linearLayout = findViewById<LinearLayout>(R.id.vocabularyListLinearLayout)
         val r : Resources = this@VocabularyListActivity.resources
         val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,375.0F, r.displayMetrics).toInt()
         val buttonHeight = ViewGroup.LayoutParams.WRAP_CONTENT
 
         for (i in 0 until vocabularyArrayList.size) {
-
             val wordObject = vocabularyArrayList[i]
             var str: String
             var word = ""
@@ -59,29 +71,19 @@ class VocabularyListActivity : AppCompatActivity() {
             var meaning = wordObject.senses[0].englishDefinitions[0]
             val wordInfoActivity = Intent(this, WordInfoActivity::class.java)
 
-            if (wordObject.japanese.containsKey("word")) {
-                word = wordObject.japanese["word"]!!
-            }
-            reading = wordObject.japanese["reading"]!!
-
-            if (word == "") {
-                str = "$reading $meaning"
-            } else {
-                str = "$word ($reading) $meaning"
-            }
-
-            if (i == vocabularyArrayList.size - 1) {
-                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.beige_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
-                linearLayout.addView((button))
-
-                button.setOnClickListener() {
-                    wordInfoActivity.putExtra("wordObject", wordObject)
-                    startActivity(wordInfoActivity)
-
-                    finish()
+            if (wordObject.level == wordLevel) {
+                if (wordObject.japanese.containsKey("word")) {
+                    word = wordObject.japanese["word"]!!
                 }
-            } else {
-                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.beige_rounded_corners,0.0F, 25.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+                reading = wordObject.japanese["reading"]!!
+
+                if (word == "") {
+                    str = "$reading $meaning"
+                } else {
+                    str = "$word ($reading) $meaning"
+                }
+
+                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.beige_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
                 linearLayout.addView((button))
 
                 button.setOnClickListener() {

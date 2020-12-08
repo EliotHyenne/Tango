@@ -370,7 +370,7 @@ class ReviewsActivity : AppCompatActivity() {
 
         val finishedTextView = layoutManager.createTextView(
             this@ReviewsActivity,
-            "Congratulations! You have no reviews.",
+            "Congratulations! You have no newreviews.",
             18.0F,
             Typeface.NORMAL,
             R.color.beige,

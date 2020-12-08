@@ -60,9 +60,11 @@ class ReviewsManager {
         }
 
         for (str in allWordsInAnswer) {
-            rightAnswer = allWordsInMeanings.contains(str)
+            if (!allWordsInMeanings.contains(str)) {
+                return false
+            }
         }
-        return rightAnswer
+        return true
     }
 
     fun setLevel(wordObject : Word, rightAnswer : Boolean) {

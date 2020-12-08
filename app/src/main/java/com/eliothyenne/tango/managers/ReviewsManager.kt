@@ -1,5 +1,6 @@
 package com.eliothyenne.tango.managers
 
+import android.util.Log
 import com.eliothyenne.tango.VocabularyListActivity
 import com.eliothyenne.tango.models.Sense
 import com.eliothyenne.tango.models.VocabularyList
@@ -49,10 +50,12 @@ class ReviewsManager {
         val meanings = vocabularyListManager.getMeanings(word.senses)
         val allWordsInAnswer = answer.split(" ").toTypedArray()
         val allWordsInMeanings = arrayListOf<String>()
-        var rightAnswer = false
 
         for (meaning in meanings) {
-            val allWordsInMeaning = meaning.split(" ").toTypedArray()
+            val re = "[^A-Za-z0-9' ]".toRegex()
+            val cleanedMeaning = re.replace(meaning, "")
+
+            val allWordsInMeaning = cleanedMeaning.split(" ").toTypedArray()
 
             for (str in allWordsInMeaning) {
                 allWordsInMeanings.add(str)

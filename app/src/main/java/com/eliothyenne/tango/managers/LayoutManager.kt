@@ -195,7 +195,7 @@ class LayoutManager {
 
             val cal = Calendar.getInstance()
             val currentTime = cal.timeInMillis
-            var str2 = ""
+            var str2 = "Next review in "
 
             val waitTime : Long = wordObject.waitTime.time - currentTime
 
@@ -208,16 +208,20 @@ class LayoutManager {
             x /= 24
             val days = x
 
+            if (days.toInt() > 0) {
+                str2 += "$days day "
+            }
+            if (hours.toInt() > 0) {
+                str2 += "$hours hour "
+            }
+            if (minutes.toInt() > 0) {
+                str2 += "$minutes min "
+            }
+            if (seconds.toInt() > 0) {
+                str2 += "$seconds sec"
+            }
             if (days.toInt() <= 0 && hours.toInt() <= 0 && minutes.toInt() <= 0 && seconds.toInt() <= 0) {
-                str2 = "Can review now"
-            } else if (days.toInt() <= 0 && hours.toInt() <= 0 && minutes.toInt() <= 0) {
-                str2 = "Next review in $seconds sec"
-            } else if (days.toInt() <= 0 && hours.toInt() <= 0) {
-                str2 = "Next review in $minutes min $seconds sec"
-            } else if (days.toInt() <= 0) {
-                str2 = "Next review in $hours hours $minutes min $seconds sec"
-            } else {
-                str2 = "Next review in $days days $hours hours $minutes min $seconds sec"
+                str2 = "Can review now!"
             }
 
             val textView2 = createTextView(

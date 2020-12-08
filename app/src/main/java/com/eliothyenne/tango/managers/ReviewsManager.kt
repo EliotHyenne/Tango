@@ -79,6 +79,11 @@ class ReviewsManager {
 
         if (rightAnswer) {
             when (currentLevel) {
+                "Unseen " -> {
+                    wordObject.level = "Apprentice 1"
+                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    wordObject.waitTime = waitTime
+                }
                 "Apprentice 1" -> {
                     wordObject.level = "Apprentice 2"
                     var waitTime = Date(currentDate + (8 * ONE_HOUR_IN_MILLIS))
@@ -120,6 +125,11 @@ class ReviewsManager {
             }
         } else {
             when (currentLevel) {
+                "Unseen " -> {
+                    wordObject.level = "Unseen "
+                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    wordObject.waitTime = waitTime
+                }
                 "Apprentice 1" -> {
                     wordObject.level = "Apprentice 1"
                     var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
@@ -166,7 +176,9 @@ class ReviewsManager {
 
     fun findNextLevel(wordObject: Word, rightAnswer: Boolean) : String {
         if (rightAnswer) {
-            if (wordObject.level == "Apprentice 1") {
+            if (wordObject.level == "Unseen ") {
+                return "Apprentice 1"
+            } else if (wordObject.level == "Apprentice 1") {
                 return "Apprentice 2"
             } else if (wordObject.level == "Apprentice 2") {
                 return "Apprentice 3"
@@ -184,7 +196,9 @@ class ReviewsManager {
                 return "Burn"
             }
         } else {
-            if (wordObject.level == "Apprentice 1") {
+            if (wordObject.level == "Unseen ") {
+                return "Unseen "
+            } else if (wordObject.level == "Apprentice 1") {
                 return "Apprentice 1"
             } else if (wordObject.level == "Apprentice 2") {
                 return "Apprentice 1"

@@ -277,12 +277,18 @@ class ReviewsActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 if (answerEditText.text.toString() != "") {
                     if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
-                        if (reviewType == "Meaning") {
+                        if (reviewType == "Meaning" && rightAnswer) {
                             var str = "+ "
                             str += reviewsManager.findNextLevel(wordObject, true)
                             levelChangeTextView.text = str
+                        } else if (reviewType == "Meaning" && !rightAnswer) {
+                            levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                            var str = "- "
+                            str += reviewsManager.findNextLevel(wordObject, false)
+                            levelChangeTextView.text = str
+                        } else {
+                            rightAnswer = true
                         }
-                        rightAnswer = true
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.dark_green)
                         linearLayout.removeView(checkAnswerButton)
@@ -310,12 +316,18 @@ class ReviewsActivity : AppCompatActivity() {
         checkAnswerButton.setOnClickListener() {
             if (answerEditText.text.toString() != "") {
                 if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
-                    if (reviewType == "Meaning") {
+                    if (reviewType == "Meaning" && rightAnswer) {
                         var str = "+ "
                         str += reviewsManager.findNextLevel(wordObject, true)
                         levelChangeTextView.text = str
+                    } else if (reviewType == "Meaning" && !rightAnswer) {
+                        levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                        var str = "- "
+                        str += reviewsManager.findNextLevel(wordObject, false)
+                        levelChangeTextView.text = str
+                    } else {
+                        rightAnswer = true
                     }
-                    rightAnswer = true
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.dark_green)
                     linearLayout.removeView(checkAnswerButton)
@@ -370,7 +382,7 @@ class ReviewsActivity : AppCompatActivity() {
 
         val finishedTextView = layoutManager.createTextView(
             this@ReviewsActivity,
-            "Congratulations! You have no newreviews.",
+            "Congratulations! You have no new reviews.",
             18.0F,
             Typeface.NORMAL,
             R.color.beige,

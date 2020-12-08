@@ -276,12 +276,11 @@ class LessonsActivity : AppCompatActivity() {
     }
 
     private fun changeWordLevel(word: Word) {
-        word.level = "Apprentice 1"
+        word.level = "Unseen "
 
-        val ONE_HOUR_IN_MILLIS: Long = 3600000
         var cal = Calendar.getInstance()
         var currentDate = cal.timeInMillis
-        var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+        var waitTime = Date(currentDate)
         word.waitTime = waitTime
     }
 

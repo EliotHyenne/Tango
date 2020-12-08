@@ -46,6 +46,7 @@ class VocabularyListActivity : AppCompatActivity() {
 
     private fun showWords(vocabularyArrayList : ArrayList<Word>) {
         showWord(vocabularyArrayList, "Unseen")
+        showWord(vocabularyArrayList, "Unseen ")
         showWord(vocabularyArrayList, "Apprentice 1")
         showWord(vocabularyArrayList, "Apprentice 2")
         showWord(vocabularyArrayList, "Apprentice 3")

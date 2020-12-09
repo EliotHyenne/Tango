@@ -6,10 +6,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ReviewsManager {
-    val vocabularyListManager = VocabularyListManager()
+    private val vocabularyListManager = VocabularyListManager()
 
     fun fetchReviewList(vocabularyList : VocabularyList) : ArrayList<Word> {
-        var reviewList = arrayListOf<Word>()
+        val reviewList = arrayListOf<Word>()
 
         for (i in 0 until vocabularyList.vocabularyArrayList.size) {
             if (readyForReview(vocabularyList.vocabularyArrayList[i])) {
@@ -20,9 +20,9 @@ class ReviewsManager {
     }
 
     private fun readyForReview(word : Word) : Boolean {
-        var cal = Calendar.getInstance()
-        var currentDate = cal.timeInMillis
-        var date = Date(currentDate)
+        val cal = Calendar.getInstance()
+        val currentDate = cal.timeInMillis
+        val date = Date(currentDate)
 
         if (word.level != "Unseen" && date > word.waitTime) {
             return true
@@ -67,52 +67,52 @@ class ReviewsManager {
     }
 
     fun setLevel(wordObject : Word, finalAnswer : Boolean) {
-        var currentLevel = wordObject.level
-        val ONE_HOUR_IN_MILLIS: Long = 3600000
+        val currentLevel = wordObject.level
+        val ONE_HOUR_IN_MILLIS = 3600000
         val ONE_DAY_IN_MILLIS: Long = 86400000
-        var cal = Calendar.getInstance()
-        var currentDate = cal.timeInMillis
+        val cal = Calendar.getInstance()
+        val currentDate = cal.timeInMillis
 
         if (finalAnswer) {
             when (currentLevel) {
                 "Unseen " -> {
                     wordObject.level = "Apprentice 1"
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 1" -> {
                     wordObject.level = "Apprentice 2"
-                    var waitTime = Date(currentDate + (8 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (8 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 2" -> {
                     wordObject.level = "Apprentice 3"
-                    var waitTime = Date(currentDate + (23 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (23 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 3" -> {
                     wordObject.level = "Apprentice 4"
-                    var waitTime = Date(currentDate + (47 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (47 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 4" -> {
                     wordObject.level = "Guru 1"
-                    var waitTime = Date(currentDate + (7 * ONE_DAY_IN_MILLIS))
+                    val waitTime = Date(currentDate + (7 * ONE_DAY_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Guru 1" -> {
                     wordObject.level = "Guru 2"
-                    var waitTime = Date(currentDate + (14 * ONE_DAY_IN_MILLIS))
+                    val waitTime = Date(currentDate + (14 * ONE_DAY_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Guru 2" -> {
                     wordObject.level = "Master"
-                    var waitTime = Date(currentDate + (30 * ONE_DAY_IN_MILLIS))
+                    val waitTime = Date(currentDate + (30 * ONE_DAY_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Master" -> {
                     wordObject.level = "Enlighten"
-                    var waitTime = Date(currentDate + (120 * ONE_DAY_IN_MILLIS))
+                    val waitTime = Date(currentDate + (120 * ONE_DAY_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Enlighten" -> {
@@ -123,47 +123,47 @@ class ReviewsManager {
             when (currentLevel) {
                 "Unseen " -> {
                     wordObject.level = "Unseen "
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 1" -> {
                     wordObject.level = "Apprentice 1"
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 2" -> {
                     wordObject.level = "Apprentice 1"
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 3" -> {
                     wordObject.level = "Apprentice 1"
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Apprentice 4" -> {
                     wordObject.level = "Apprentice 1"
-                    var waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (4 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Guru 1" -> {
                     wordObject.level = "Apprentice 4"
-                    var waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Guru 2" -> {
                     wordObject.level = "Apprentice 4"
-                    var waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Master" -> {
                     wordObject.level = "Apprentice 4"
-                    var waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
+                    val waitTime = Date(currentDate + (43 * ONE_HOUR_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
                 "Enlighten" -> {
                     wordObject.level = "Guru 1"
-                    var waitTime = Date(currentDate + (7 * ONE_DAY_IN_MILLIS))
+                    val waitTime = Date(currentDate + (7 * ONE_DAY_IN_MILLIS))
                     wordObject.waitTime = waitTime
                 }
             }

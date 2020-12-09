@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.eliothyenne.tango.R
 import com.eliothyenne.tango.models.Word
-import java.lang.Math.round
 import java.util.*
 
 class LayoutManager {
@@ -64,7 +63,7 @@ class LayoutManager {
 
         textView.text = text
         textView.textSize = textSize
-        textView.setTypeface(null, typeFace);
+        textView.setTypeface(null, typeFace)
         textView.setTextColor(ContextCompat.getColor(context, color))
 
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -107,7 +106,7 @@ class LayoutManager {
         if (wordObject.japanese.containsKey("word")) {
             word = wordObject.japanese["word"].toString()
         }
-        var reading: String = wordObject.japanese["reading"].toString()
+        val reading: String = wordObject.japanese["reading"].toString()
 
         //Reading TextView
         val readingTextView = createTextView(
@@ -124,7 +123,7 @@ class LayoutManager {
                 0,
                 0,
                 0,
-                Gravity.LEFT
+                Gravity.START
         )
         linearLayout.addView(readingTextView)
 
@@ -144,7 +143,7 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
             linearLayout.addView(wordTextView)
         }
@@ -166,14 +165,14 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
             linearLayout.addView(textView)
         }
 
         //Tags TextView
         if (wordObject.level != "Unseen") {
-            var str = wordObject.level
+            val str = wordObject.level
 
             val textView = createTextView(
                     context,
@@ -189,7 +188,7 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
             linearLayout.addView(textView)
 
@@ -238,7 +237,7 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
             linearLayout.addView(textView2)
         }
@@ -267,7 +266,7 @@ class LayoutManager {
                         0,
                         0,
                         0,
-                        Gravity.LEFT
+                        Gravity.START
                 )
                 linearLayout.addView(textView)
             }
@@ -312,7 +311,7 @@ class LayoutManager {
                         0,
                         0,
                         0,
-                        Gravity.LEFT
+                        Gravity.START
                 )
                 linearLayout.addView(textView)
             }
@@ -334,7 +333,7 @@ class LayoutManager {
                         0,
                         0,
                         0,
-                        Gravity.LEFT
+                        Gravity.START
                 )
                 linearLayout.addView(textView)
             }
@@ -354,7 +353,7 @@ class LayoutManager {
             0,
             0,
             0,
-            Gravity.LEFT
+            Gravity.START
         )
         linearLayout.addView(spacer)
 
@@ -375,7 +374,7 @@ class LayoutManager {
                 0,
                 0,
                 0,
-                Gravity.LEFT
+                Gravity.START
             )
             linearLayout.addView(kanji)
         }
@@ -398,7 +397,7 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
             val noteTextView = createTextView(
                     context,
@@ -414,9 +413,8 @@ class LayoutManager {
                     0,
                     0,
                     0,
-                    Gravity.LEFT
+                    Gravity.START
             )
-
             linearLayout.addView(noteTitleTextView)
             linearLayout.addView(noteTextView)
         }

@@ -1,6 +1,5 @@
 package com.eliothyenne.tango.activities
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -12,7 +11,6 @@ import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.eliothyenne.tango.R
-import com.eliothyenne.tango.managers.ArrayListManager
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
@@ -20,7 +18,6 @@ import com.eliothyenne.tango.models.Word
 
 class WordInfoActivity : AppCompatActivity() {
     private val vocabularyListManager = VocabularyListManager()
-    private val arrayListManager = ArrayListManager()
     private val layoutManager = LayoutManager()
     private var vocabularyList = VocabularyList(arrayListOf())
 
@@ -41,11 +38,11 @@ class WordInfoActivity : AppCompatActivity() {
 
         //Notes TextView and EditText
         val noteTextView = layoutManager.createTextView(this@WordInfoActivity, "Note(s):", 14.0F, Typeface.NORMAL,
-            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
+            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.START)
         val noteEditText = layoutManager.createEditText(this@WordInfoActivity, "Optional note(s)",
             R.color.light_gray, word.note.toString(),
             R.color.dark_gray,
-            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.START)
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
@@ -54,12 +51,12 @@ class WordInfoActivity : AppCompatActivity() {
             R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
         linearLayout.addView((removeWordButton))
 
-        removeWordButton.setOnClickListener() {
+        removeWordButton.setOnClickListener {
             val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@WordInfoActivity)
             builder.setCancelable(true)
             builder.setTitle("Are you sure?")
             builder.setMessage("")
-            builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
+            builder.setPositiveButton("Remove") { _, _ ->
                 //Remove word from vocabulary list
                 vocabularyListManager.removeWordFromVocabularyList(word, vocabularyList)
                 vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
@@ -68,14 +65,10 @@ class WordInfoActivity : AppCompatActivity() {
                 startActivity(vocabularyListActivity)
 
                 finish()
-            })
-            builder.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
-
-            val dialog: android.app.AlertDialog? = builder.create()
-
-            if (dialog != null) {
-                dialog.show()
             }
+            builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+
+            builder.create()?.show()
         }
 
         val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Save", 14.0F,
@@ -96,7 +89,7 @@ class WordInfoActivity : AppCompatActivity() {
             }
         })
 
-        saveButton.setOnClickListener() {
+        saveButton.setOnClickListener {
             editNote(word, noteEditText.text.toString())
 
             vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)

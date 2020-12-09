@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.eliothyenne.tango.R
-import com.eliothyenne.tango.managers.ArrayListManager
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
@@ -19,7 +18,6 @@ import java.util.*
 class LessonsActivity : AppCompatActivity() {
     private val layoutManager = LayoutManager()
     private val vocabularyListManager = VocabularyListManager()
-    private val arrayListManager = ArrayListManager()
     private var vocabularyList = VocabularyList(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +70,7 @@ class LessonsActivity : AppCompatActivity() {
 
         showWordInfo(unseenWordsList, index)
 
-        nextButton.setOnClickListener() {
+        nextButton.setOnClickListener {
             changeWordLevel(unseenWordsList[index])
             linearLayout.removeAllViews()
 
@@ -109,13 +107,13 @@ class LessonsActivity : AppCompatActivity() {
             0,
             0,
             0,
-            Gravity.RIGHT
+            Gravity.END
         )
         linearLayout.addView(wordCounterDisplayTextView)
 
         val wordObject = unseenWordsList[index]
 
-        var reading: String
+        val reading: String
         var word = ""
 
         if (wordObject.japanese.containsKey("word")) {
@@ -166,13 +164,6 @@ class LessonsActivity : AppCompatActivity() {
     private fun showWordInfo(unseenWordsList: ArrayList<Word>, index: Int) {
         val linearLayout = findViewById<LinearLayout>(R.id.lessonsLinearLayout)
         val wordObject = unseenWordsList[index]
-        var reading: String
-        var word = ""
-
-        if (wordObject.japanese.containsKey("word")) {
-            word = wordObject.japanese["word"].toString()
-        }
-        reading = wordObject.japanese["reading"].toString()
 
         layoutManager.showWordInfo(wordObject, linearLayout, this@LessonsActivity)
 
@@ -192,7 +183,7 @@ class LessonsActivity : AppCompatActivity() {
                 0,
                 0,
                 0,
-                Gravity.LEFT
+                Gravity.START
             )
             val noteTextView = layoutManager.createTextView(
                 this@LessonsActivity,
@@ -208,7 +199,7 @@ class LessonsActivity : AppCompatActivity() {
                 0,
                 0,
                 0,
-                Gravity.LEFT
+                Gravity.START
             )
 
             linearLayout.addView(noteTitleTextView)
@@ -267,7 +258,7 @@ class LessonsActivity : AppCompatActivity() {
         )
         linearLayout.addView((mainMenuButton))
 
-        mainMenuButton.setOnClickListener() {
+        mainMenuButton.setOnClickListener {
             vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
             val mainActivity = Intent(this, MainActivity::class.java)
             startActivity(mainActivity)
@@ -279,9 +270,9 @@ class LessonsActivity : AppCompatActivity() {
     private fun changeWordLevel(word: Word) {
         word.level = "Unseen "
 
-        var cal = Calendar.getInstance()
-        var currentDate = cal.timeInMillis
-        var waitTime = Date(currentDate)
+        val cal = Calendar.getInstance()
+        val currentDate = cal.timeInMillis
+        val waitTime = Date(currentDate)
         word.waitTime = waitTime
     }
 

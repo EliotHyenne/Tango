@@ -40,7 +40,11 @@ class ReviewsActivity : AppCompatActivity() {
         if (reviewsList.isEmpty()) {
             showFinishedReviews()
         } else {
-            startReviewSession(reviewsList, "Reading", 0, false, false, true)
+            startReviewSession(reviewsList, "Reading", 0,
+                readingAnswer = false,
+                meaningAnswer = false,
+                finalAnswer = true
+            )
         }
     }
 
@@ -74,7 +78,7 @@ class ReviewsActivity : AppCompatActivity() {
             10,
             20,
             0,
-            Gravity.RIGHT
+            Gravity.END
         )
 
         val levelChangeTextView = layoutManager.createTextView(
@@ -91,7 +95,7 @@ class ReviewsActivity : AppCompatActivity() {
                 10,
                 0,
                 0,
-                Gravity.LEFT
+                Gravity.START
         )
 
         val nextButton = layoutManager.createButton(
@@ -150,8 +154,8 @@ class ReviewsActivity : AppCompatActivity() {
         )
 
         var word = ""
-        var wordObject = reviewsList[index]
-        var reading: String = wordObject.japanese["reading"].toString()
+        val wordObject = reviewsList[index]
+        val reading: String = wordObject.japanese["reading"].toString()
 
         val wordCounterDisplayLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val levelChangeLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -266,7 +270,7 @@ class ReviewsActivity : AppCompatActivity() {
             answerEditText.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     if (s.toString().length > outputStr.length) {
-                        var str = s.toString().substring(outputStr.length, s.toString().length)
+                        val str = s.toString().substring(outputStr.length, s.toString().length)
 
                         if (textInputManager.romajiToHiraganaHashMap.contains(str)) {
                             outputStr += textInputManager.romajiToHiraganaHashMap[str].toString()
@@ -294,7 +298,7 @@ class ReviewsActivity : AppCompatActivity() {
         }
 
         //Check answer
-        answerEditText.setOnEditorActionListener { v, actionId, event ->
+        answerEditText.setOnEditorActionListener { _, actionId, _ ->
             val handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 if (answerEditText.text.toString() != "") {
@@ -356,7 +360,7 @@ class ReviewsActivity : AppCompatActivity() {
 
         linearLayout.addView(checkAnswerButton)
 
-        checkAnswerButton.setOnClickListener() {
+        checkAnswerButton.setOnClickListener {
             if (answerEditText.text.toString() != "") {
                 if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
                     //Answered correctly
@@ -413,7 +417,7 @@ class ReviewsActivity : AppCompatActivity() {
         }
 
         //Handle ignore button
-        retryButton.setOnClickListener() {
+        retryButton.setOnClickListener {
             finalAnswer = true
             if (reviewType == "Reading") {
                 startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
@@ -423,7 +427,7 @@ class ReviewsActivity : AppCompatActivity() {
         }
 
         //Handle next button
-        nextButton.setOnClickListener() {
+        nextButton.setOnClickListener {
             if (reviewType == "Reading") {
                 if (!readingAnswer) {
                     reviewsManager.setLevel(wordObject, finalAnswer)
@@ -499,7 +503,7 @@ class ReviewsActivity : AppCompatActivity() {
         )
         linearLayout.addView((mainMenuButton))
 
-        mainMenuButton.setOnClickListener() {
+        mainMenuButton.setOnClickListener {
             vocabularyListManager.saveVocabularyList(filesDir, vocabularyList)
             val mainActivity = Intent(this, MainActivity::class.java)
             startActivity(mainActivity)

@@ -1,6 +1,5 @@
 package com.eliothyenne.tango.activities
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -42,11 +41,11 @@ class AddWordActivity : AppCompatActivity() {
 
         searchWordEditText.requestFocus()
 
-        searchWordEditText.setOnEditorActionListener { v, actionId, event ->
+        searchWordEditText.setOnEditorActionListener { _, actionId, _ ->
             val handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
-                var input = searchWordEditText.text.toString()
-                linearLayout.removeAllViews();
+                val input = searchWordEditText.text.toString()
+                linearLayout.removeAllViews()
                 linearLayout?.addView(searchWordEditText)
                 fetchWord(input)
             }
@@ -97,7 +96,7 @@ class AddWordActivity : AppCompatActivity() {
 
                     val jsonObject = JSONObject(response)
                     val meaningsJSONArray = jsonObject.getJSONArray("meanings")
-                    val meaningsArrayList = getMeaningsArrayListFromJSONArrat(meaningsJSONArray)
+                    val meaningsArrayList = getMeaningsArrayListFromJSONArray(meaningsJSONArray)
                     kanjiInWordHashMap[char] = meaningsArrayList
                 } catch (e  : Exception) {
                     Log.e("ERROR", e.message!!)
@@ -125,11 +124,11 @@ class AddWordActivity : AppCompatActivity() {
 
         //Notes TextView and EditText
         val noteTextView = layoutManager.createTextView(this@AddWordActivity, "Note(s):", 14.0F, Typeface.NORMAL,
-            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
+            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.START)
         val noteEditText = layoutManager.createEditText(this@AddWordActivity, "Optional note(s)",
             R.color.light_gray,"",
             R.color.dark_gray,
-            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.START)
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
@@ -148,7 +147,7 @@ class AddWordActivity : AppCompatActivity() {
             linearLayout.addView((removeWordButton))
         }
 
-        addWordButton.setOnClickListener() {
+        addWordButton.setOnClickListener {
             word!!.note = noteEditText.text.toString()
 
             //Add word to vocabulary list
@@ -160,12 +159,12 @@ class AddWordActivity : AppCompatActivity() {
             linearLayout.addView((removeWordButton))
         }
 
-        removeWordButton.setOnClickListener() {
+        removeWordButton.setOnClickListener {
             val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@AddWordActivity)
             builder.setCancelable(true)
             builder.setTitle("Are you sure?")
             builder.setMessage("")
-            builder.setPositiveButton("Remove", DialogInterface.OnClickListener { dialog, which ->
+            builder.setPositiveButton("Remove") { _, _ ->
 
                 //Remove word from vocabulary list
                 vocabularyListManager.removeWordFromVocabularyList(word!!, vocabularyList)
@@ -173,18 +172,14 @@ class AddWordActivity : AppCompatActivity() {
 
                 linearLayout.removeView(removeWordButton)
                 linearLayout.addView(addWordButton)
-            })
-            builder.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
-
-            val dialog: android.app.AlertDialog? = builder.create()
-
-            if (dialog != null) {
-                dialog.show()
             }
+            builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+
+            builder.create()?.show()
         }
     }
 
-    private fun getMeaningsArrayListFromJSONArrat(jsonArray : JSONArray) : ArrayList<String> {
+    private fun getMeaningsArrayListFromJSONArray(jsonArray : JSONArray) : ArrayList<String> {
         val arrayList = arrayListOf<String>()
 
         if (jsonArray.length() != 0) {

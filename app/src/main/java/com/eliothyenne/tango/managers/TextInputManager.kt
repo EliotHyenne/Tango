@@ -1,11 +1,7 @@
 package com.eliothyenne.tango.managers
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 class TextInputManager {
     val romajiToHiraganaHashMap = HashMap<String, String>()
-    val hiraganaKatakanaCharacters = arrayListOf<String>()
 
     init {
         romajiToHiraganaHashMap["a"] = "あ"

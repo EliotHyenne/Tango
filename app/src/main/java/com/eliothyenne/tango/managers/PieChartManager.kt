@@ -5,17 +5,14 @@ import com.eliothyenne.tango.models.Word
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.IValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.ViewPortHandler
 
 class PieChartManager {
-    var unseenPercentage = 0.0F
-    var apprenticePercentage = 0.0F
-    var guruPercentage = 0.0F
-    var masterPercentage = 0.0F
-    var enlightenPercentage = 0.0F
-    var burnPercentage = 0.0F
+    private var unseenPercentage = 0.0F
+    private var apprenticePercentage = 0.0F
+    private var guruPercentage = 0.0F
+    private var masterPercentage = 0.0F
+    private var enlightenPercentage = 0.0F
+    private var burnPercentage = 0.0F
 
     fun findPercentages(vocabularyArrayList: ArrayList<Word>) {
         var unseenCounter = 0
@@ -49,7 +46,7 @@ class PieChartManager {
     }
 
     fun setData() : PieData {
-        var dataArrayList = arrayListOf<PieEntry>()
+        val dataArrayList = arrayListOf<PieEntry>()
 
         if (unseenPercentage != 0.0F) {
             dataArrayList.add(PieEntry(unseenPercentage, "Unseen"))
@@ -78,7 +75,7 @@ class PieChartManager {
         colors.add(Color.parseColor("#707070"))
         colors.add(Color.parseColor("#54544F"))
 
-        var pieDataSet = PieDataSet(dataArrayList, "Statistics")
+        val pieDataSet = PieDataSet(dataArrayList, "Statistics")
         pieDataSet.valueTextSize = 14.0F
         pieDataSet.valueTextColor = Color.parseColor("#FFFFFF")
         pieDataSet.colors = colors

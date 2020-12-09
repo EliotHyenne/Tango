@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             pieChartManager.findPercentages(vocabularyList.vocabularyArrayList)
             pieChart.notifyDataSetChanged()
             pieChart.legend.isEnabled = false
-            var pieData = pieChartManager.setData()
+            val pieData = pieChartManager.setData()
             pieChart.data = pieData
             pieChart.setEntryLabelTextSize(14.0F)
             pieChart.description.isEnabled = false

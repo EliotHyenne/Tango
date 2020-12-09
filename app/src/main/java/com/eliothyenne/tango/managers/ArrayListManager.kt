@@ -5,10 +5,10 @@ class ArrayListManager {
         var str = ""
 
         for (j in 0 until arrayList.size) {
-            if (j != arrayList.size - 1) {
-                str += arrayList[j] + ", "
+            str += if (j != arrayList.size - 1) {
+                arrayList[j] + ", "
             } else {
-                str += arrayList[j]
+                arrayList[j]
             }
         }
         return str

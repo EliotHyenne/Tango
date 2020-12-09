@@ -33,11 +33,11 @@ class VocabularyListActivity : AppCompatActivity() {
 
         showWords(vocabularyList.vocabularyArrayList)
 
-        searchWordEditText.setOnEditorActionListener { v, actionId, event ->
+        searchWordEditText.setOnEditorActionListener { _, actionId, _ ->
             val handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
-                var input = searchWordEditText.text.toString()
-                linearLayout.removeAllViews();
+                val input = searchWordEditText.text.toString()
+                linearLayout.removeAllViews()
                 linearLayout?.addView(searchWordEditText)
                 searchWord(input, searchWordEditText)
             }
@@ -69,8 +69,8 @@ class VocabularyListActivity : AppCompatActivity() {
             val wordObject = vocabularyArrayList[i]
             var str: String
             var word = ""
-            var reading = ""
-            var meaning = wordObject.senses[0].englishDefinitions[0]
+            var reading: String
+            val meaning = wordObject.senses[0].englishDefinitions[0]
             val wordInfoActivity = Intent(this, WordInfoActivity::class.java)
 
             if (wordObject.level == wordLevel) {
@@ -79,15 +79,15 @@ class VocabularyListActivity : AppCompatActivity() {
                 }
                 reading = wordObject.japanese["reading"]!!
 
-                if (word == "") {
-                    str = "$reading $meaning"
+                str = if (word == "") {
+                    "$reading $meaning"
                 } else {
-                    str = "$word ($reading) $meaning"
+                    "$word ($reading) $meaning"
                 }
 
                 val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F,
                     R.color.white,
-                    R.drawable.purple1_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
+                    R.drawable.purple1_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.START)
 
                 if (wordLevel == "Apprentice 1" || wordLevel == "Apprentice 2" || wordLevel == "Apprentice 3" || wordLevel == "Apprentice 4") {
                     button.setBackgroundResource(R.drawable.purple2_rounded_corners)
@@ -103,7 +103,7 @@ class VocabularyListActivity : AppCompatActivity() {
 
                 linearLayout.addView(button)
 
-                button.setOnClickListener() {
+                button.setOnClickListener {
                     wordInfoActivity.putExtra("wordObject", wordObject)
                     startActivity(wordInfoActivity)
 
@@ -120,9 +120,9 @@ class VocabularyListActivity : AppCompatActivity() {
         for (i in 0 until vocabularyList.vocabularyArrayList.size) {
             val wordObject = vocabularyList.vocabularyArrayList[i]
             var word = ""
-            var reading = ""
-            var meanings = vocabularyListManager.getMeanings(wordObject.senses)
-            var meaning = wordObject.senses[0].englishDefinitions[0]
+            var reading: String
+            val meanings = vocabularyListManager.getMeanings(wordObject.senses)
+            val meaning = wordObject.senses[0].englishDefinitions[0]
 
             if (wordObject.japanese.containsKey("word")) {
                 word = wordObject.japanese["word"]!!

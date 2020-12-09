@@ -301,23 +301,29 @@ class ReviewsActivity : AppCompatActivity() {
                         //Answered correctly
                         if (reviewType == "Reading") {
                             readingAnswer = true
+                            linearLayout.removeView(checkAnswerButton)
+                            linearLayout.addView(nextButton)
                         } else if (reviewType == "Meaning") {
                             meaningAnswer = true
                             if (finalAnswer) {
                                 var str = "+ "
                                 str += reviewsManager.findNextLevel(wordObject, true)
                                 levelChangeTextView.text = str
+                                linearLayout.removeView(checkAnswerButton)
+                                linearLayout.addView(nextButton)
+                                layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
+                                layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                             } else {
                                 levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
                                 var str = "- "
                                 str += reviewsManager.findNextLevel(wordObject, false)
                                 levelChangeTextView.text = str
+                                linearLayout.removeView(checkAnswerButton)
+                                linearLayout.addView(nextButton)
                             }
                         }
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.dark_green)
-                        linearLayout.removeView(checkAnswerButton)
-                        linearLayout.addView(nextButton)
                     } else {
                         //Answered incorrectly
                         finalAnswer = false
@@ -351,23 +357,29 @@ class ReviewsActivity : AppCompatActivity() {
                     //Answered correctly
                     if (reviewType == "Reading") {
                         readingAnswer = true
+                        linearLayout.removeView(checkAnswerButton)
+                        linearLayout.addView(nextButton)
                     } else if (reviewType == "Meaning") {
                         meaningAnswer = true
                         if (finalAnswer) {
                             var str = "+ "
                             str += reviewsManager.findNextLevel(wordObject, true)
                             levelChangeTextView.text = str
+                            linearLayout.removeView(checkAnswerButton)
+                            linearLayout.addView(nextButton)
+                            layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
+                            layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                         } else {
                             levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
                             var str = "- "
                             str += reviewsManager.findNextLevel(wordObject, false)
                             levelChangeTextView.text = str
+                            linearLayout.removeView(checkAnswerButton)
+                            linearLayout.addView(nextButton)
                         }
                     }
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.dark_green)
-                    linearLayout.removeView(checkAnswerButton)
-                    linearLayout.addView(nextButton)
                 } else {
                     //Answered incorrectly
                     finalAnswer = false

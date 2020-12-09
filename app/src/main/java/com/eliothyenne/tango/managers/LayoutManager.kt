@@ -233,7 +233,7 @@ class LayoutManager {
                     0.0F,
                     0.0F,
                     0.0F,
-                    25.0F,
+                    0.0F,
                     50,
                     0,
                     0,
@@ -241,28 +241,6 @@ class LayoutManager {
                     Gravity.LEFT
             )
             linearLayout.addView(textView2)
-        }
-
-        for ((key, value) in wordObject.kanjiInWordHashMap!!) {
-            val meanings = arrayListManager.stringBuilder(value)
-            val str = "$key ： $meanings"
-            val kanji = createTextView(
-                context,
-                str,
-                16.0F,
-                Typeface.NORMAL,
-                R.color.white,
-                0.0F,
-                0.0F,
-                0.0F,
-                0.0F,
-                50,
-                0,
-                0,
-                0,
-                Gravity.LEFT
-            )
-            linearLayout.addView(kanji)
         }
 
         //Senses
@@ -295,29 +273,27 @@ class LayoutManager {
             }
 
             //Meaning TextView
-            if (englishDefinitionsArrayList.isNotEmpty()) {
-                var str = arrayListManager.stringBuilder(englishDefinitionsArrayList)
-                val index = i + 1
-                str = "$index. $str"
+            var str = arrayListManager.stringBuilder(englishDefinitionsArrayList)
+            val index = i + 1
+            str = "$index. $str"
 
-                val textView = createTextView(
-                        context,
-                        str,
-                        14.0F,
-                        Typeface.BOLD,
-                        R.color.white,
-                        0.0F,
-                        0.0F,
-                        0.0F,
-                        0.0F,
-                        50,
-                        0,
-                        0,
-                        0,
-                        Gravity.LEFT
-                )
-                linearLayout.addView(textView)
-            }
+            val textView = createTextView(
+                    context,
+                    str,
+                    14.0F,
+                    Typeface.BOLD,
+                    R.color.white,
+                    0.0F,
+                    0.0F,
+                    0.0F,
+                    0.0F,
+                    50,
+                    0,
+                    0,
+                    0,
+                    Gravity.LEFT
+            )
+            linearLayout.addView(textView)
 
             //Tags TextView
             if (senseTags.isNotEmpty()) {
@@ -362,6 +338,46 @@ class LayoutManager {
                 )
                 linearLayout.addView(textView)
             }
+        }
+
+        val spacer = createTextView(
+            context,
+            " ",
+            14.0F,
+            Typeface.NORMAL,
+            R.color.white,
+            0.0F,
+            0.0F,
+            0.0F,
+            10.0F,
+            50,
+            0,
+            0,
+            0,
+            Gravity.LEFT
+        )
+        linearLayout.addView(spacer)
+
+        for ((key, value) in wordObject.kanjiInWordHashMap!!) {
+            val meanings = arrayListManager.stringBuilder(value)
+            val str = "$key ： $meanings"
+            val kanji = createTextView(
+                context,
+                str,
+                14.0F,
+                Typeface.NORMAL,
+                R.color.light_gray,
+                0.0F,
+                0.0F,
+                0.0F,
+                0.0F,
+                50,
+                0,
+                0,
+                0,
+                Gravity.LEFT
+            )
+            linearLayout.addView(kanji)
         }
     }
 

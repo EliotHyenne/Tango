@@ -129,6 +129,24 @@ class ReviewsActivity : AppCompatActivity() {
             0,
             Gravity.CENTER
         )
+        val ignoreButton = layoutManager.createButton(
+            this@ReviewsActivity,
+            buttonWidth,
+            buttonHeight,
+            "Ignore",
+            14.0F,
+            R.color.white,
+            R.drawable.red_rounded_corners,
+            0.0F,
+            25.0F,
+            0.0F,
+            0.0F,
+            0,
+            0,
+            0,
+            0,
+            Gravity.CENTER
+        )
 
         var word = ""
         var wordObject = reviewsList[index]
@@ -226,6 +244,7 @@ class ReviewsActivity : AppCompatActivity() {
             28,
             Gravity.CENTER
         )
+
         val layoutParams = LinearLayout.LayoutParams(answerEditTextWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.layoutParams = layoutParams
 
@@ -317,6 +336,7 @@ class ReviewsActivity : AppCompatActivity() {
                         linearLayout.addView(nextButton)
                         layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                         layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
+                        linearLayout.addView(ignoreButton)
                     }
                 }
             }
@@ -366,7 +386,18 @@ class ReviewsActivity : AppCompatActivity() {
                     linearLayout.addView(nextButton)
                     layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                     layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
+                    linearLayout.addView(ignoreButton)
                 }
+            }
+        }
+
+        //Handle ignore button
+        ignoreButton.setOnClickListener() {
+            finalAnswer = true
+            if (reviewType == "Reading") {
+                startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
+            } else {
+                startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)
             }
         }
 

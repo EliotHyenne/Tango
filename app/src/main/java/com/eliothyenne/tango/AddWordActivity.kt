@@ -24,9 +24,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class AddWordActivity : AppCompatActivity() {
-    private val tag = "LOG"
-    private val baseUrl = "https://jisho.org/api/v1/search/words?keyword="
-
     private val vocabularyListManager = VocabularyListManager()
     private val layoutManager = LayoutManager()
 
@@ -58,6 +55,7 @@ class AddWordActivity : AppCompatActivity() {
     }
 
     private fun fetchWord(input : String) {
+        val baseUrl = "https://jisho.org/api/v1/search/words?keyword="
 
         runBlocking {
             try {
@@ -75,14 +73,41 @@ class AddWordActivity : AppCompatActivity() {
                 val sensesJSONArray = dataJSONArray.getJSONObject(0).getJSONArray("senses")
                 val sensesArrayList = getSensesArrayListFromJSONArray(sensesJSONArray)
 
-                showWord(tagsArrayList, japaneseHashMap, sensesArrayList)
+                var kanjiInWordHashMap = hashMapOf<Char, ArrayList<String>>()
+
+                if (japaneseHashMap.containsKey("word")) {
+                    kanjiInWordHashMap = japaneseHashMap["word"]?.let { fetchKanjiInWord(it) }!!
+                }
+
+                showWord(tagsArrayList, japaneseHashMap, sensesArrayList, kanjiInWordHashMap)
             } catch (e  : Exception) {
-                Log.e(tag, e.message!!)
+                Log.e("ERROR", e.message!!)
             }
         }
     }
 
-    private fun showWord(tagsArrayList : ArrayList<String>, japaneseHashMap : HashMap<String, String>, sensesArrayList : ArrayList<Sense>) {
+    private fun fetchKanjiInWord(kanji : String) : HashMap<Char, ArrayList<String>> {
+        val baseUrl = "https://kanjiapi.dev/v1/kanji/"
+        val kanjiInWordHashMap = hashMapOf<Char, ArrayList<String>>()
+
+        for (char in kanji) {
+            runBlocking {
+                try {
+                    val response = Fuel.get("$baseUrl$char").awaitString()
+
+                    val jsonObject = JSONObject(response)
+                    val meaningsJSONArray = jsonObject.getJSONArray("meanings")
+                    val meaningsArrayList = getMeaningsArrayListFromJSONArrat(meaningsJSONArray)
+                    kanjiInWordHashMap[char] = meaningsArrayList
+                } catch (e  : Exception) {
+                    Log.e("ERROR", e.message!!)
+                }
+            }
+        }
+        return kanjiInWordHashMap
+    }
+
+    private fun showWord(tagsArrayList : ArrayList<String>, japaneseHashMap : HashMap<String, String>, sensesArrayList : ArrayList<Sense>, kanjiInWordHashMap : HashMap<Char, ArrayList<String>>) {
         val r: Resources = this@AddWordActivity.resources
         val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100.0F, r.displayMetrics).toInt()
         val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75.0F, r.displayMetrics).toInt()
@@ -92,7 +117,8 @@ class AddWordActivity : AppCompatActivity() {
             tagsArrayList,
             japaneseHashMap,
             sensesArrayList,
-            ""
+            "",
+            kanjiInWordHashMap
         )
 
         layoutManager.showWordInfo(word!!, linearLayout, this@AddWordActivity)
@@ -148,6 +174,17 @@ class AddWordActivity : AppCompatActivity() {
                 dialog.show()
             }
         }
+    }
+
+    private fun getMeaningsArrayListFromJSONArrat(jsonArray : JSONArray) : ArrayList<String> {
+        val arrayList = arrayListOf<String>()
+
+        if (jsonArray.length() != 0) {
+            for (i in 0 until jsonArray.length()) {
+                arrayList.add(jsonArray.getString(i))
+            }
+        }
+        return arrayList
     }
 
     private fun getArrayListFromJSONArray(jsonArray : JSONArray) : ArrayList<String> {

@@ -129,18 +129,18 @@ class ReviewsActivity : AppCompatActivity() {
             0,
             Gravity.CENTER
         )
-        val ignoreButton = layoutManager.createButton(
+        val retryButton = layoutManager.createButton(
             this@ReviewsActivity,
             buttonWidth,
             buttonHeight,
-            "Ignore",
+            "Retry",
             14.0F,
             R.color.white,
             R.drawable.red_rounded_corners,
             0.0F,
             25.0F,
             0.0F,
-            0.0F,
+            25.0F,
             0,
             0,
             0,
@@ -336,7 +336,7 @@ class ReviewsActivity : AppCompatActivity() {
                         linearLayout.addView(nextButton)
                         layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                         layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
-                        linearLayout.addView(ignoreButton)
+                        linearLayout.addView(retryButton)
                     }
                 }
             }
@@ -386,13 +386,13 @@ class ReviewsActivity : AppCompatActivity() {
                     linearLayout.addView(nextButton)
                     layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                     layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
-                    linearLayout.addView(ignoreButton)
+                    linearLayout.addView(retryButton)
                 }
             }
         }
 
         //Handle ignore button
-        ignoreButton.setOnClickListener() {
+        retryButton.setOnClickListener() {
             finalAnswer = true
             if (reviewType == "Reading") {
                 startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)

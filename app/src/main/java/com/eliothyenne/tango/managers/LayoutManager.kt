@@ -233,7 +233,7 @@ class LayoutManager {
                     0.0F,
                     0.0F,
                     0.0F,
-                    0.0F,
+                    25.0F,
                     50,
                     0,
                     0,
@@ -241,6 +241,28 @@ class LayoutManager {
                     Gravity.LEFT
             )
             linearLayout.addView(textView2)
+        }
+
+        for ((key, value) in wordObject.kanjiInWordHashMap!!) {
+            val meanings = arrayListManager.stringBuilder(value)
+            val str = "$key ： $meanings"
+            val kanji = createTextView(
+                context,
+                str,
+                16.0F,
+                Typeface.NORMAL,
+                R.color.white,
+                0.0F,
+                0.0F,
+                0.0F,
+                0.0F,
+                50,
+                0,
+                0,
+                0,
+                Gravity.LEFT
+            )
+            linearLayout.addView(kanji)
         }
 
         //Senses

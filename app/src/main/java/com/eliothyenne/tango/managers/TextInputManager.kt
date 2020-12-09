@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 
 class TextInputManager {
     val romajiToHiraganaHashMap = HashMap<String, String>()
+    val hiraganaKatakanaCharacters = arrayListOf<String>()
 
     init {
         romajiToHiraganaHashMap["a"] = "あ"

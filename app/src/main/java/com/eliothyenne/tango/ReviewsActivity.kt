@@ -39,11 +39,11 @@ class ReviewsActivity : AppCompatActivity() {
         if (reviewsList.isEmpty()) {
             showFinishedReviews()
         } else {
-            startReviewSession(reviewsList, "Reading", 0, false)
+            startReviewSession(reviewsList, "Reading", 0, false, false, true)
         }
     }
 
-    private fun startReviewSession(reviewsList : ArrayList<Word>, reviewType : String, index : Int, rightAnswer : Boolean) {
+    private fun startReviewSession(reviewsList : ArrayList<Word>, reviewType : String, index : Int, readingAnswer : Boolean, meaningAnswer : Boolean, finalAnswer : Boolean) {
         val linearLayout = findViewById<LinearLayout>(R.id.reviewsLinearLayout)
         val linearLayout2 = findViewById<RelativeLayout>(R.id.topBarRelativeLayout)
         val r: Resources = this@ReviewsActivity.resources
@@ -51,7 +51,9 @@ class ReviewsActivity : AppCompatActivity() {
         val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75.0F, r.displayMetrics).toInt()
         val answerEditTextWidth = ViewGroup.LayoutParams.MATCH_PARENT
 
-        var rightAnswer = rightAnswer
+        var readingAnswer = readingAnswer
+        var meaningAnswer = meaningAnswer
+        var finalAnswer = finalAnswer
 
         //Show word counter
         val totalunseenWordsList = reviewsList.size
@@ -277,28 +279,38 @@ class ReviewsActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 if (answerEditText.text.toString() != "") {
                     if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
-                        if (reviewType == "Meaning" && rightAnswer) {
-                            var str = "+ "
-                            str += reviewsManager.findNextLevel(wordObject, true)
-                            levelChangeTextView.text = str
-                        } else if (reviewType == "Meaning" && !rightAnswer) {
-                            levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
-                            var str = "- "
-                            str += reviewsManager.findNextLevel(wordObject, false)
-                            levelChangeTextView.text = str
-                        } else {
-                            rightAnswer = true
+                        //Answered correctly
+                        if (reviewType == "Reading") {
+                            readingAnswer = true
+                        } else if (reviewType == "Meaning") {
+                            meaningAnswer = true
+                            if (finalAnswer) {
+                                var str = "+ "
+                                str += reviewsManager.findNextLevel(wordObject, true)
+                                levelChangeTextView.text = str
+                            } else {
+                                levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                                var str = "- "
+                                str += reviewsManager.findNextLevel(wordObject, false)
+                                levelChangeTextView.text = str
+                            }
                         }
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.dark_green)
                         linearLayout.removeView(checkAnswerButton)
                         linearLayout.addView(nextButton)
                     } else {
+                        //Answered incorrectly
+                        finalAnswer = false
+                        if (reviewType == "Reading") {
+                            readingAnswer = false
+                        } else {
+                            meaningAnswer = false
+                        }
                         levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
                         var str = "- "
                         str += reviewsManager.findNextLevel(wordObject, false)
                         levelChangeTextView.text = str
-                        rightAnswer = false
                         answerEditText.isEnabled = false
                         answerEditText.setBackgroundResource(R.color.red)
                         linearLayout.removeView(checkAnswerButton)
@@ -316,28 +328,38 @@ class ReviewsActivity : AppCompatActivity() {
         checkAnswerButton.setOnClickListener() {
             if (answerEditText.text.toString() != "") {
                 if (reviewsManager.checkAnswer(answerEditText.text.toString(), wordObject, reviewType)) {
-                    if (reviewType == "Meaning" && rightAnswer) {
-                        var str = "+ "
-                        str += reviewsManager.findNextLevel(wordObject, true)
-                        levelChangeTextView.text = str
-                    } else if (reviewType == "Meaning" && !rightAnswer) {
-                        levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
-                        var str = "- "
-                        str += reviewsManager.findNextLevel(wordObject, false)
-                        levelChangeTextView.text = str
-                    } else {
-                        rightAnswer = true
+                    //Answered correctly
+                    if (reviewType == "Reading") {
+                        readingAnswer = true
+                    } else if (reviewType == "Meaning") {
+                        meaningAnswer = true
+                        if (finalAnswer) {
+                            var str = "+ "
+                            str += reviewsManager.findNextLevel(wordObject, true)
+                            levelChangeTextView.text = str
+                        } else {
+                            levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                            var str = "- "
+                            str += reviewsManager.findNextLevel(wordObject, false)
+                            levelChangeTextView.text = str
+                        }
                     }
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.dark_green)
                     linearLayout.removeView(checkAnswerButton)
                     linearLayout.addView(nextButton)
                 } else {
+                    //Answered incorrectly
+                    finalAnswer = false
+                    if (reviewType == "Reading") {
+                        readingAnswer = false
+                    } else {
+                        meaningAnswer = false
+                    }
                     levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
                     var str = "- "
                     str += reviewsManager.findNextLevel(wordObject, false)
                     levelChangeTextView.text = str
-                    rightAnswer = false
                     answerEditText.isEnabled = false
                     answerEditText.setBackgroundResource(R.color.red)
                     linearLayout.removeView(checkAnswerButton)
@@ -351,14 +373,22 @@ class ReviewsActivity : AppCompatActivity() {
         //Handle next button
         nextButton.setOnClickListener() {
             if (reviewType == "Reading") {
-                startReviewSession(reviewsList, "Meaning", index, rightAnswer)
-            } else {
-                if (index + 1 > reviewsList.size - 1) {
-                    reviewsManager.setLevel(wordObject, rightAnswer)
-                    showFinishedReviews()
+                if (!readingAnswer) {
+                    reviewsManager.setLevel(wordObject, finalAnswer)
+                    startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
                 } else {
-                    reviewsManager.setLevel(wordObject, rightAnswer)
-                    startReviewSession(reviewsList, "Reading", index + 1, rightAnswer)
+                    startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)
+                }
+            } else {
+                if (meaningAnswer && index + 1 > reviewsList.size - 1) {
+                    reviewsManager.setLevel(wordObject, finalAnswer)
+                    showFinishedReviews()
+                } else if (!meaningAnswer) {
+                    reviewsManager.setLevel(wordObject, finalAnswer)
+                    startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)
+                } else {
+                    reviewsManager.setLevel(wordObject, finalAnswer)
+                    startReviewSession(reviewsList, "Reading", index + 1, readingAnswer, meaningAnswer, true)
                 }
             }
         }

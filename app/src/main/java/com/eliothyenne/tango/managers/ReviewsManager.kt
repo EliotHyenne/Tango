@@ -1,11 +1,7 @@
 package com.eliothyenne.tango.managers
 
-import android.util.Log
-import com.eliothyenne.tango.VocabularyListActivity
-import com.eliothyenne.tango.models.Sense
 import com.eliothyenne.tango.models.VocabularyList
 import com.eliothyenne.tango.models.Word
-import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -70,14 +66,14 @@ class ReviewsManager {
         return true
     }
 
-    fun setLevel(wordObject : Word, rightAnswer : Boolean) {
+    fun setLevel(wordObject : Word, finalAnswer : Boolean) {
         var currentLevel = wordObject.level
         val ONE_HOUR_IN_MILLIS: Long = 3600000
         val ONE_DAY_IN_MILLIS: Long = 86400000
         var cal = Calendar.getInstance()
         var currentDate = cal.timeInMillis
 
-        if (rightAnswer) {
+        if (finalAnswer) {
             when (currentLevel) {
                 "Unseen " -> {
                     wordObject.level = "Apprentice 1"

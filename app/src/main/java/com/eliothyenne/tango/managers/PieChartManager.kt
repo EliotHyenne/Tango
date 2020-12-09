@@ -26,7 +26,7 @@ class PieChartManager {
         var burnCounter = 0
 
         for (word in vocabularyArrayList) {
-            if (word.level == "Unseen") {
+            if (word.level == "Unseen" || word.level == "Unseen ") {
                 unseenCounter += 1
             } else if (word.level == "Apprentice 1" || word.level == "Apprentice 2" || word.level == "Apprentice 3" || word.level == "Apprentice 4") {
                 apprenticeCounter += 1

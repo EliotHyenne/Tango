@@ -1,4 +1,4 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.Intent
 import android.content.res.Resources
@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.ArrayListManager
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager

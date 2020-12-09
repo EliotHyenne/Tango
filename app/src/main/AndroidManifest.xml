@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:hasFragileUserData="true">
-        <activity android:name=".VocabularyListActivity" />
-        <activity android:name=".LessonsActivity" />
-        <activity android:name=".ReviewsActivity" />
-        <activity android:name=".AddWordActivity" />
-        <activity android:name=".WordInfoActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.VocabularyListActivity" />
+        <activity android:name=".activities.LessonsActivity" />
+        <activity android:name=".activities.ReviewsActivity" />
+        <activity android:name=".activities.AddWordActivity" />
+        <activity android:name=".activities.WordInfoActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

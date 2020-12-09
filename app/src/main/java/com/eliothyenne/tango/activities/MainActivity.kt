@@ -1,10 +1,11 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.PieChartManager
 import com.eliothyenne.tango.managers.ReviewsManager
 import com.eliothyenne.tango.managers.VocabularyListManager

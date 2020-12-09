@@ -1,4 +1,4 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -11,7 +11,7 @@ import android.view.Gravity
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.eliothyenne.tango.managers.ArrayListManager
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.Sense
@@ -124,13 +124,21 @@ class AddWordActivity : AppCompatActivity() {
         layoutManager.showWordInfo(word!!, linearLayout, this@AddWordActivity)
 
         //Notes TextView and EditText
-        val noteTextView = layoutManager.createTextView(this@AddWordActivity, "Note(s):", 14.0F, Typeface.NORMAL, R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
-        val noteEditText = layoutManager.createEditText(this@AddWordActivity, "Optional note(s)", R.color.light_gray,"", R.color.dark_gray, R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+        val noteTextView = layoutManager.createTextView(this@AddWordActivity, "Note(s):", 14.0F, Typeface.NORMAL,
+            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
+        val noteEditText = layoutManager.createEditText(this@AddWordActivity, "Optional note(s)",
+            R.color.light_gray,"",
+            R.color.dark_gray,
+            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
-        val addWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Add", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
-        val removeWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val addWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Add", 14.0F,
+            R.color.white,
+            R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val removeWordButton = layoutManager.createButton(this@AddWordActivity, buttonWidth, buttonHeight,"Remove", 14.0F,
+            R.color.white,
+            R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
 
         if (!vocabularyListManager.vocabularyListContainsWord(word!!, vocabularyList)) {
             //Add word button

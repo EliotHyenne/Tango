@@ -1,8 +1,7 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -11,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
@@ -85,7 +85,9 @@ class VocabularyListActivity : AppCompatActivity() {
                     str = "$word ($reading) $meaning"
                 }
 
-                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.purple1_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
+                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F,
+                    R.color.white,
+                    R.drawable.purple1_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
 
                 if (wordLevel == "Apprentice 1" || wordLevel == "Apprentice 2" || wordLevel == "Apprentice 3" || wordLevel == "Apprentice 4") {
                     button.setBackgroundResource(R.drawable.purple2_rounded_corners)

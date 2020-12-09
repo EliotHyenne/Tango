@@ -1,4 +1,4 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.Context
 import android.content.Intent
@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.*
 import com.eliothyenne.tango.models.VocabularyList
 import com.eliothyenne.tango.models.Word
@@ -81,7 +82,7 @@ class ReviewsActivity : AppCompatActivity() {
                 "",
                 14.0F,
                 Typeface.BOLD,
-                R.color.dark_green,
+            R.color.dark_green,
                 0.0F,
                 0.0F,
                 0.0F,
@@ -314,7 +315,9 @@ class ReviewsActivity : AppCompatActivity() {
                                 layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                                 layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                             } else {
-                                levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                                levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity,
+                                    R.color.red
+                                ))
                                 var str = "- "
                                 str += reviewsManager.findNextLevel(wordObject, false)
                                 levelChangeTextView.text = str
@@ -332,7 +335,9 @@ class ReviewsActivity : AppCompatActivity() {
                         } else {
                             meaningAnswer = false
                         }
-                        levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                        levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity,
+                            R.color.red
+                        ))
                         var str = "- "
                         str += reviewsManager.findNextLevel(wordObject, false)
                         levelChangeTextView.text = str
@@ -370,7 +375,9 @@ class ReviewsActivity : AppCompatActivity() {
                             layoutManager.showWordInfo(wordObject, linearLayout, this@ReviewsActivity)
                             layoutManager.showWordNote(wordObject, linearLayout, this@ReviewsActivity)
                         } else {
-                            levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                            levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity,
+                                R.color.red
+                            ))
                             var str = "- "
                             str += reviewsManager.findNextLevel(wordObject, false)
                             levelChangeTextView.text = str
@@ -388,7 +395,9 @@ class ReviewsActivity : AppCompatActivity() {
                     } else {
                         meaningAnswer = false
                     }
-                    levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity, R.color.red))
+                    levelChangeTextView.setTextColor(ContextCompat.getColor(this@ReviewsActivity,
+                        R.color.red
+                    ))
                     var str = "- "
                     str += reviewsManager.findNextLevel(wordObject, false)
                     levelChangeTextView.text = str

@@ -1,4 +1,4 @@
-package com.eliothyenne.tango
+package com.eliothyenne.tango.activities
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,14 +10,13 @@ import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.eliothyenne.tango.R
 import com.eliothyenne.tango.managers.ArrayListManager
 import com.eliothyenne.tango.managers.LayoutManager
 import com.eliothyenne.tango.managers.VocabularyListManager
 import com.eliothyenne.tango.models.VocabularyList
 import com.eliothyenne.tango.models.Word
-
 
 class WordInfoActivity : AppCompatActivity() {
     private val vocabularyListManager = VocabularyListManager()
@@ -41,12 +40,18 @@ class WordInfoActivity : AppCompatActivity() {
         layoutManager.showWordInfo(word, linearLayout, this@WordInfoActivity)
 
         //Notes TextView and EditText
-        val noteTextView = layoutManager.createTextView(this@WordInfoActivity, "Note(s):", 14.0F, Typeface.NORMAL, R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
-        val noteEditText = layoutManager.createEditText(this@WordInfoActivity, "Optional note(s)", R.color.light_gray, word.note.toString(), R.color.dark_gray, R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
+        val noteTextView = layoutManager.createTextView(this@WordInfoActivity, "Note(s):", 14.0F, Typeface.NORMAL,
+            R.color.white, 0.0F, 25.0F, 0.0F, 5.0F, 50, 0, 0, 0, Gravity.LEFT)
+        val noteEditText = layoutManager.createEditText(this@WordInfoActivity, "Optional note(s)",
+            R.color.light_gray, word.note.toString(),
+            R.color.dark_gray,
+            R.color.white, 0.0F, 0.0F, 0.0F, 0.0F, 28, 28, 28, 28, Gravity.LEFT)
         linearLayout.addView(noteTextView)
         linearLayout.addView(noteEditText)
 
-        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Remove", 14.0F, R.color.white, R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val removeWordButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Remove", 14.0F,
+            R.color.white,
+            R.drawable.red_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
         linearLayout.addView((removeWordButton))
 
         removeWordButton.setOnClickListener() {
@@ -73,7 +78,9 @@ class WordInfoActivity : AppCompatActivity() {
             }
         }
 
-        val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Save", 14.0F, R.color.white, R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
+        val saveButton = layoutManager.createButton(this@WordInfoActivity, buttonWidth, buttonHeight, "Save", 14.0F,
+            R.color.white,
+            R.drawable.dark_green_rounded_corners, 0.0F, 25.0F, 0.0F, 25.0F, 0, 0, 0, 0, Gravity.CENTER)
 
         noteEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

@@ -2,6 +2,7 @@ package com.eliothyenne.tango
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -84,8 +85,21 @@ class VocabularyListActivity : AppCompatActivity() {
                     str = "$word ($reading) $meaning"
                 }
 
-                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.beige_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
-                linearLayout.addView((button))
+                val button = layoutManager.createButton(this@VocabularyListActivity, buttonWidth, buttonHeight, str, 21.0F, R.color.white, R.drawable.purple1_rounded_corners,0.0F, 0.0F, 0.0F, 25.0F, 28, 28, 28, 28, Gravity.LEFT)
+
+                if (wordLevel == "Apprentice 1" || wordLevel == "Apprentice 2" || wordLevel == "Apprentice 3" || wordLevel == "Apprentice 4") {
+                    button.setBackgroundResource(R.drawable.purple2_rounded_corners)
+                } else if (wordLevel == "Guru 1" || wordLevel == "Guru 2") {
+                    button.setBackgroundResource(R.drawable.purple3_rounded_corners)
+                } else if (wordLevel == "Master") {
+                    button.setBackgroundResource(R.drawable.purple4_rounded_corners)
+                } else if (wordLevel == "Enlighten") {
+                    button.setBackgroundResource(R.drawable.purple5_rounded_corners)
+                } else if (wordLevel == "Burn") {
+                    button.setBackgroundResource(R.drawable.purple6_rounded_corners)
+                }
+
+                linearLayout.addView(button)
 
                 button.setOnClickListener() {
                     wordInfoActivity.putExtra("wordObject", wordObject)

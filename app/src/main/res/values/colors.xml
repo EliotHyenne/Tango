@@ -13,6 +13,12 @@
     <color name="red">#ea97ad</color>
     <color name="light_blue">#AED1CC</color>
     <color name="beige">#efd9d1</color>
+    <color name="purple1">#f7d7df</color>
+    <color name="purple2">#f3c1ce</color>
+    <color name="purple3">#eeacbe</color>
+    <color name="purple4">#ea97ad</color>
+    <color name="purple5">#e6829c</color>
+    <color name="purple6">#e16d8c</color>
     <color name="dark_green">#8db596</color>
     <color name="light_gray">#bdbdbd</color>
 </resources>

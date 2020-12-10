@@ -44,7 +44,7 @@ class ReviewsManager {
         }
 
         val meanings = vocabularyListManager.getMeanings(word.senses)
-        val allWordsInAnswer = answer.split(" ").toTypedArray()
+        val allWordsInAnswer = answer.toLowerCase().split(" ").toTypedArray()
         val allWordsInMeanings = arrayListOf<String>()
 
         for (meaning in meanings) {

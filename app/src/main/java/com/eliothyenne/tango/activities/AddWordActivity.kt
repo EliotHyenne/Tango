@@ -215,7 +215,9 @@ class AddWordActivity : AppCompatActivity() {
         }
 
         for (i in 0 until japaneseJSONArray.length()) {
-            readingArrayList.add(japaneseJSONArray.getJSONObject(i).getString("reading"))
+            if (!readingArrayList.contains(japaneseJSONArray.getJSONObject(i).getString("reading"))) {
+                readingArrayList.add(japaneseJSONArray.getJSONObject(i).getString("reading"))
+            }
         }
         japaneseHashMap["reading"] = readingArrayList
 

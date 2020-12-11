@@ -66,8 +66,8 @@ class AddWordActivity : AppCompatActivity() {
                 val tagsJSONArray = dataJSONArray.getJSONObject(0).getJSONArray("tags")
                 val tagsArrayList = getArrayListFromJSONArray(tagsJSONArray)
 
-                val japaneseJSONObject = dataJSONArray.getJSONObject(0).getJSONArray("japanese").getJSONObject(0)
-                val japaneseHashMap = getJapaneseHashMapFromJSONObject(japaneseJSONObject)
+                val japaneseJSONArray = dataJSONArray.getJSONObject(0).getJSONArray("japanese")
+                val japaneseHashMap = getJapaneseHashMapFromJSONArray(japaneseJSONArray)
 
                 val sensesJSONArray = dataJSONArray.getJSONObject(0).getJSONArray("senses")
                 val sensesArrayList = getSensesArrayListFromJSONArray(sensesJSONArray)
@@ -75,7 +75,7 @@ class AddWordActivity : AppCompatActivity() {
                 var kanjiInWordHashMap = hashMapOf<Char, ArrayList<String>>()
 
                 if (japaneseHashMap.containsKey("word")) {
-                    kanjiInWordHashMap = japaneseHashMap["word"]?.let { fetchKanjiInWord(it) }!!
+                    kanjiInWordHashMap = japaneseHashMap["word"]?.let { fetchKanjiInWord(it[0]) }!!
                 }
 
                 showWord(tagsArrayList, japaneseHashMap, sensesArrayList, kanjiInWordHashMap)
@@ -85,7 +85,7 @@ class AddWordActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchKanjiInWord(kanji : String) : HashMap<Char, ArrayList<String>> {
+    private fun fetchKanjiInWord(kanji: String) : HashMap<Char, ArrayList<String>> {
         val baseUrl = "https://kanjiapi.dev/v1/kanji/"
         val kanjiInWordHashMap = hashMapOf<Char, ArrayList<String>>()
 
@@ -106,7 +106,7 @@ class AddWordActivity : AppCompatActivity() {
         return kanjiInWordHashMap
     }
 
-    private fun showWord(tagsArrayList : ArrayList<String>, japaneseHashMap : HashMap<String, String>, sensesArrayList : ArrayList<Sense>, kanjiInWordHashMap : HashMap<Char, ArrayList<String>>) {
+    private fun showWord(tagsArrayList : ArrayList<String>, japaneseHashMap : HashMap<String, ArrayList<String>>, sensesArrayList : ArrayList<Sense>, kanjiInWordHashMap : HashMap<Char, ArrayList<String>>) {
         val r: Resources = this@AddWordActivity.resources
         val buttonWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100.0F, r.displayMetrics).toInt()
         val buttonHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75.0F, r.displayMetrics).toInt()
@@ -119,6 +119,8 @@ class AddWordActivity : AppCompatActivity() {
             "",
             kanjiInWordHashMap
         )
+
+        Log.d("ERROR", japaneseHashMap["reading"].toString())
 
         layoutManager.showWordInfo(word!!, linearLayout, this@AddWordActivity)
 
@@ -201,16 +203,22 @@ class AddWordActivity : AppCompatActivity() {
         return arrayList
     }
 
-    private fun getJapaneseHashMapFromJSONObject(japaneseJSONObject : JSONObject) : HashMap<String, String> {
-        val japaneseHashMap = hashMapOf<String, String>()
+    private fun getJapaneseHashMapFromJSONArray(japaneseJSONArray : JSONArray) : HashMap<String, ArrayList<String>> {
+        val japaneseHashMap = hashMapOf<String, ArrayList<String>>()
+        val wordArrayList = arrayListOf<String>()
+        val readingArrayList = arrayListOf<String>()
+        val japaneseJSONObject = japaneseJSONArray.getJSONObject(0)
 
         if (japaneseJSONObject.has("word")) {
-            japaneseHashMap["word"] = japaneseJSONObject.getString("word")
+            wordArrayList.add(japaneseJSONObject.getString("word"))
+            japaneseHashMap["word"] = wordArrayList
         }
 
-        if (japaneseJSONObject.has("reading")) {
-            japaneseHashMap["reading"] = japaneseJSONObject.getString("reading")
+        for (i in 0 until japaneseJSONArray.length()) {
+            readingArrayList.add(japaneseJSONArray.getJSONObject(i).getString("reading"))
         }
+        japaneseHashMap["reading"] = readingArrayList
+
         return japaneseHashMap
     }
 

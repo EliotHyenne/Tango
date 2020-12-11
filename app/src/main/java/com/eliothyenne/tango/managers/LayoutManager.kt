@@ -104,14 +104,25 @@ class LayoutManager {
         var word = ""
 
         if (wordObject.japanese.containsKey("word")) {
-            word = wordObject.japanese["word"].toString()
+            word = wordObject.japanese["word"]?.get(0).toString()
         }
-        val reading: String = wordObject.japanese["reading"].toString()
+        val readings: ArrayList<String>? = wordObject.japanese["reading"]
+        var readingStr = ""
+
+        if (readings != null) {
+            for (i in 0 until readings.size) {
+                if (i == readings.size - 1) {
+                    readingStr += readings[i]
+                } else {
+                    readingStr += readings[i] + ", "
+                }
+            }
+        }
 
         //Reading TextView
         val readingTextView = createTextView(
                 context,
-                reading,
+                readingStr,
                 21.0F,
                 Typeface.NORMAL,
                 R.color.beige,

@@ -69,15 +69,21 @@ class VocabularyListActivity : AppCompatActivity() {
             val wordObject = vocabularyArrayList[i]
             var str: String
             var word = ""
-            var reading: String
+            var reading = ""
             val meaning = wordObject.senses[0].englishDefinitions[0]
             val wordInfoActivity = Intent(this, WordInfoActivity::class.java)
 
             if (wordObject.level == wordLevel) {
                 if (wordObject.japanese.containsKey("word")) {
-                    word = wordObject.japanese["word"]!!
+                    val wordArrayList = wordObject.japanese["word"]
+                    if (wordArrayList != null) {
+                        word = wordArrayList[0]
+                    }
                 }
-                reading = wordObject.japanese["reading"]!!
+                val readingsArrayList = wordObject.japanese["reading"]
+                if (readingsArrayList != null) {
+                    reading = readingsArrayList[0]
+                }
 
                 str = if (word == "") {
                     "$reading $meaning"
@@ -120,14 +126,20 @@ class VocabularyListActivity : AppCompatActivity() {
         for (i in 0 until vocabularyList.vocabularyArrayList.size) {
             val wordObject = vocabularyList.vocabularyArrayList[i]
             var word = ""
-            var reading: String
+            var reading = ""
             val meanings = vocabularyListManager.getMeanings(wordObject.senses)
             val meaning = wordObject.senses[0].englishDefinitions[0]
 
             if (wordObject.japanese.containsKey("word")) {
-                word = wordObject.japanese["word"]!!
+                val wordArrayList = wordObject.japanese["word"]
+                if (wordArrayList != null) {
+                    word = wordArrayList[0]
+                }
             }
-            reading = wordObject.japanese["reading"]!!
+            val readingsArrayList = wordObject.japanese["reading"]
+            if (readingsArrayList != null) {
+                reading = readingsArrayList[0]
+            }
 
             if (input != "") {
                 if (word.contains(input) || reading.contains(input) || meanings.contains(input) || meaning.contains(input)) {

@@ -170,7 +170,10 @@ class ReviewsActivity : AppCompatActivity() {
         linearLayout.addView(linearLayout2)
 
         if (wordObject.japanese.containsKey("word")) {
-            word = wordObject.japanese["word"].toString()
+            val wordArrayList = wordObject.japanese["word"]
+            if (wordArrayList != null) {
+                word = wordArrayList[0]
+            }
         }
 
         //Show word title

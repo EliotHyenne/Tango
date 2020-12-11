@@ -33,11 +33,11 @@ class ReviewsManager {
     fun checkAnswer(answer : String, word : Word, reviewType : String) : Boolean {
         if (reviewType == "Reading") {
             if (word.japanese.contains("word")) {
-                if (answer == word.japanese["word"]) {
+                if (answer == word.japanese["word"]?.get(0).toString()) {
                     return true
                 }
             }
-            if (answer == word.japanese["reading"]) {
+            if (word.japanese["reading"]?.contains(answer) == true) {
                 return true
             }
             return false

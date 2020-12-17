@@ -155,7 +155,18 @@ class ReviewsActivity : AppCompatActivity() {
 
         var word = ""
         val wordObject = reviewsList[index]
-        val reading: String = wordObject.japanese["reading"].toString()
+        val readings: ArrayList<String>? = wordObject.japanese["reading"]
+        var readingStr = ""
+
+        if (readings != null) {
+            for (i in 0 until readings.size) {
+                if (i == readings.size - 1) {
+                    readingStr += readings[i]
+                } else {
+                    readingStr += readings[i] + ", "
+                }
+            }
+        }
 
         val wordCounterDisplayLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val levelChangeLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -198,7 +209,7 @@ class ReviewsActivity : AppCompatActivity() {
         } else {
             val readingDisplayTextView = layoutManager.createTextView(
                 this@ReviewsActivity,
-                reading,
+                readingStr,
                 60.0F,
                 Typeface.NORMAL,
                 R.color.beige,

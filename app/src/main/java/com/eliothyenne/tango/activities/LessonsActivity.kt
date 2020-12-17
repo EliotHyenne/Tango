@@ -113,7 +113,6 @@ class LessonsActivity : AppCompatActivity() {
 
         val wordObject = unseenWordsList[index]
 
-        val reading: String
         var word = ""
 
         if (wordObject.japanese.containsKey("word")) {

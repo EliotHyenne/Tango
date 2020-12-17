@@ -7,6 +7,7 @@ import kotlin.collections.ArrayList
 
 class ReviewsManager {
     private val vocabularyListManager = VocabularyListManager()
+    private val textInputManager = TextInputManager()
 
     fun fetchReviewList(vocabularyList : VocabularyList) : ArrayList<Word> {
         val reviewList = arrayListOf<Word>()

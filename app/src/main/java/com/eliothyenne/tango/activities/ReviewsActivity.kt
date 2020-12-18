@@ -432,8 +432,8 @@ class ReviewsActivity : AppCompatActivity() {
 
         //Handle ignore button
         retryButton.setOnClickListener {
-            finalAnswer = true
             if (reviewType == "Reading") {
+                finalAnswer = true
                 startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
             } else {
                 startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)

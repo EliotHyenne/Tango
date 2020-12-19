@@ -430,12 +430,15 @@ class ReviewsActivity : AppCompatActivity() {
             }
         }
 
-        //Handle ignore button
+        //Handle retry button
         retryButton.setOnClickListener {
             if (reviewType == "Reading") {
+                readingAnswer = true
                 finalAnswer = true
                 startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
             } else {
+                meaningAnswer = true
+                finalAnswer = true
                 startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)
             }
         }

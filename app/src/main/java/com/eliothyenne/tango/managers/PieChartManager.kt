@@ -68,12 +68,12 @@ class PieChartManager {
         }
 
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#AED1CC"))
-        colors.add(Color.parseColor("#efd9d1"))
-        colors.add(Color.parseColor("#bedbbb"))
-        colors.add(Color.parseColor("#8db596"))
-        colors.add(Color.parseColor("#707070"))
-        colors.add(Color.parseColor("#54544F"))
+        colors.add(Color.parseColor("#f7d7df"))
+        colors.add(Color.parseColor("#f3c1ce"))
+        colors.add(Color.parseColor("#eeacbe"))
+        colors.add(Color.parseColor("#ea97ad"))
+        colors.add(Color.parseColor("#e6829c"))
+        colors.add(Color.parseColor("#e16d8c"))
 
         val pieDataSet = PieDataSet(dataArrayList, "Statistics")
         pieDataSet.valueTextSize = 14.0F

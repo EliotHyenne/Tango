@@ -447,7 +447,6 @@ class ReviewsActivity : AppCompatActivity() {
         nextButton.setOnClickListener {
             if (reviewType == "Reading") {
                 if (!readingAnswer) {
-                    reviewsManager.setLevel(wordObject, finalAnswer)
                     startReviewSession(reviewsList, "Reading", index, readingAnswer, meaningAnswer, finalAnswer)
                 } else {
                     startReviewSession(reviewsList, "Meaning", index, readingAnswer, meaningAnswer, finalAnswer)
